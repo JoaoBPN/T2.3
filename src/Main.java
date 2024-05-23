@@ -1,66 +1,116 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import Modelos.Circulo;
+import Utilidades.OperacoesDoSwitch;
+import Modelos.Ponto;
+import Utilidades.ArraysUtils;
 
-public class Main {
-    public static void main(String[] args) {
+public class Main{
+    public static void main(String[] args){
 
-        // A principio, a unica consideração é que o usuário escrvera corretamente o sistema de busca de pontos e circulos ou seja.
-        // Atributo = valor, eg: nome = P1 ou X = 1 ou Y = 2.5 ou Raio = 3.14, letras maiusculas ou minusculas não importam para o parametro mas importam para o valor
+        int tamanhoMaxPonto = 10;
+        int tamanhoMaxCirculo = 2;
 
-        Scanner scanner = new Scanner(System.in);
+        Ponto[] pontos = new Ponto[tamanhoMaxPonto];
+        Circulo[] circulos = new Circulo[tamanhoMaxCirculo];
+        int opcao = 0;
 
-        List<Circulo> circulos = new ArrayList<>();
-        List<Ponto> pontos = new ArrayList<>();
-        List<Circulo> buscaCirculos = new ArrayList<>();
-        List<Ponto> buscaPontos = new ArrayList<>();
+        while(opcao != 0){
 
-        int opcao = -1;
+            opcao = OperacoesDoSwitch.menuPrincipal();
 
-        while(opcao!= 0){
-            System.out.println(""" 
-                    Selecione uma opção:
-                    1 - Operar com Pontos
-                    2 - Operar com Circulos
-                    3 - Exibir todos os pontos e Circulos
-                    0 - Sair""");
-
-            opcao = scanner.nextInt();
-            scanner.nextLine(); // para limpar o buffer
+            int opcaoInterna = -1;
 
             switch(opcao){
                 case 0:
-                    System.out.println("Saindo...");
+                    System.out.println("Encerrando...");
                     break;
                 case 1:
-                    int opcaoInterna = -1;
-                    while(opcaoInterna != 0) {
 
-                        System.out.println("""
-                                Selecione uma opção:
-                                1 - Adicionar Ponto
-                                2 - Remover Ponto
-                                3 - Buscar Ponto
-                                4 - Exibir todos os Pontos
-                                0 - Voltar ao menu principal""");
+                    opcaoInterna = OperacoesDoSwitch.menuPontos();
 
-                        opcaoInterna = scanner.nextInt();
-                        scanner.nextLine(); // para limpar o buffer
+                        switch(opcaoInterna){
+                            case 0:
+
+                                System.out.println("Voltando...");
+
+                                break;
+
+                            case 1:
+
+                                if(ArraysUtils.arrayIsFull(pontos)){
+                                    System.out.println("Limite de pontos atingidos, primeiramente remova um ponto para poder adicionar outro");
+                                    break;
+                                }
+
+                                OperacoesDoSwitch.criaPonto().adicionaFormaEmArray(pontos);
+
+                                break;
+                            case 2:
+
+                                // operação de remover ponto
+                                break;
+                            case 3:
+                                ArraysUtils.imprimeArray(pontos);
+                                break;
+                            case 4:
+                                // responder a distancia entre dois pontos selecionados
+
+                                break;
+                            default:
+                                System.out.println("Operação invalida");
+                                break;
+
+                        }
+
+
+                    break;
+
+                case 2:
+                    while(opcaoInterna != 0){
+
+                        opcaoInterna = OperacoesDoSwitch.menuCirculos();
+
 
                         switch(opcaoInterna){
                             case 0:
                                 System.out.println("Voltando...");
                                 break;
                             case 1:
+                                if(ArraysUtils.arrayIsFull(circulos)){
+                                    System.out.println("Limite de circulos atingidos, primeiramente remova um circulo para poder adicionar outro");
+                                    break;
+                                }
+                                    OperacoesDoSwitch.criaCirculo().adicionaFormaEmArray(circulos);
 
+                                break;
+                            case 2:
+                                //operação de remover circulo
+                                break;
+                            case 3:
+                                ArraysUtils.imprimeArray(circulos);
+                                break;
+                            case 4:
+                                //retornar o diamentro de um circulo
+                                break;
+                            case 5:
+                                //retornar a circunferencia de um circulo
+                                break;
+                            case 6:
+                                // retornar a area de um circulo
+                                break;
+                            case 7:
+                                //saber se um circulo intercepta outro ou não
+                                break;
                             default:
-                                System.out.println("Opção inválida");
+                                System.out.println("Operação invalida");
                                 break;
                         }
+
                     }
-                default:
-                    System.out.println("Opção inválida");
                     break;
+                default:
+                    System.out.println("Operação invalida");
+                    break;
+
             }
 
 

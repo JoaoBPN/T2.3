@@ -1,42 +1,38 @@
+package Modelos;
+
 import static java.lang.Math.sqrt;
 
-public class Ponto{
+public class Ponto extends Forma {
 
-    private String nome;
     private double x;
     private double y;
 
-    Ponto(double x,double y){
-        setX(x);
-        setY(y);
-        setNome("");
-    }
-    Ponto(String nome,double x,double y){
+    public Ponto(String nome,double x,double y){
+
         this(x,y);
         setNome(nome);
-    }
-    public void setNome(String nome){
-        this.nome = nome;
+
     }
 
-    public String getNome(){
-        return this.nome;
+    public Ponto(double x,double y){
+        setX(x);
+        setY(y);
     }
 
-    public void setX(double x){
-        this.x = x;
+    public double getY() {
+        return y;
     }
 
-    public double getX(){
-        return this.x;
-    }
-
-    public void setY(double y){
+    public void setY(double y) {
         this.y = y;
     }
 
-    public double getY(){
-        return this.y;
+    public double getX() {
+        return x;
+    }
+
+    public void setX(double x) {
+        this.x = x;
     }
 
     public double distanciaEntrePontos(Ponto ponto){
@@ -49,12 +45,14 @@ public class Ponto{
 
     }
 
+    public static Ponto criaPonto(double x,double y){
+        return new Ponto(x,y);
+    }
+
     @Override
     public String toString(){
         return getNome()+" = "+"["+getX()+";"+getY()+"]";
 
     }
-
-
 
 }
