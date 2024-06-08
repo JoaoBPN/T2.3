@@ -2,10 +2,12 @@ import java.util.Scanner;
 public class Main{
 
     private static final Scanner scanner = new Scanner(System.in);
+
     private static final int maxPointsSize = 10;
-    // (por enquanto não esta sendo usado) private static final int maxCirclesSize = 2;
+    private static final int maxCirclesSize = 2;
 
     private static final Point[] points = new Point[maxPointsSize];
+    private static final Circle[] circles = new Circle[maxCirclesSize];
 
 
     public static void main(String[] args){
@@ -48,6 +50,38 @@ public class Main{
         return option;
     }
 
+    private static int pointMenu(){
+        System.out.println("""
+                Escolha uma operação:
+                1 - Criar ponto
+                2 - Remover ponto
+                3 - Listar pontos
+                4 - Calcular distancia entre pontos
+                5 - Voltar ao menu principal
+                """);
+
+        int option = scanner.nextInt();
+        scanner.nextLine(); //limpa o buffer;
+        return option;
+    }
+
+    private static int circleMenu(){
+        System.out.println("""
+                Escolha uma operação:
+                1 - Criar circulos
+                2 - Remover circulo
+                3 - Listar circulos
+                4 - Calcular diametro
+                5 - Calcular circunferencia
+                6 - Calcular area
+                7 - Saber se um circulo intercepta outro
+                8 - Voltar ao menu principal
+                """);
+        int option = scanner.nextInt();
+        scanner.nextLine(); //limpa o buffer;
+        return option;
+    }
+
 
     private static void pointSwitch(){
         int option = -1;
@@ -78,31 +112,6 @@ public class Main{
         }
     }
 
-    private static int pointMenu(){
-        System.out.println("""
-                Escolha uma operação:
-                1 - Criar ponto
-                2 - Remover ponto
-                3 - Listar pontos
-                4 - Calcular distancia entre pontos
-                5 - Voltar ao menu principal
-                """);
-
-        int option = scanner.nextInt();
-        scanner.nextLine(); //limpa o buffer;
-        return option;
-    }
-
-    private static Point createInstaceOfPoint(){
-        System.out.println("Informe o nome do ponto: ");
-        String name = scanner.nextLine();
-        System.out.println("Informe a coordenada x do ponto");
-        double x = scanner.nextDouble();
-        System.out.println("Informe a coordenada y do ponto");
-        double y = scanner.nextDouble();
-        return new Point(name,x,y);
-    }
-
     private static void createPoint(){
         Point point = createInstaceOfPoint();
         ArrayUtility.addIn(point,points);
@@ -128,6 +137,18 @@ public class Main{
         System.out.println("Distancia = "+distance);
     }
 
+
+
+    private static Point createInstaceOfPoint(){
+        System.out.println("Informe o nome do ponto: ");
+        String name = scanner.nextLine();
+        System.out.println("Informe a coordenada x do ponto");
+        double x = scanner.nextDouble();
+        System.out.println("Informe a coordenada y do ponto");
+        double y = scanner.nextDouble();
+        return new Point(name,x,y);
+    }
+
     private static void circleSwitch(){
         int option = -1;
 
@@ -137,25 +158,25 @@ public class Main{
 
             switch(option){
                 case 1:
-                    System.out.println("Operação de criar circulo");
+                    createCircle();
                     break;
                 case 2:
-                    System.out.println("Operação de remover circulo");
+                    removeCircle();
                     break;
                 case 3:
-                    System.out.println("Operação de listar circulos");
+                    showCircles();
                     break;
                 case 4:
-                    System.out.println("Operação de calcular diametro");
+                    circleDiameter();
                     break;
                 case 5:
-                    System.out.println("Operação de calcular circunferencia");
+                    circleCircumference();
                     break;
                 case 6:
-                    System.out.println("Operação de calcular area");
+                    circleArea();
                     break;
                 case 7:
-                    System.out.println("Operação que informa se um circulo intercepta outro");
+                    circleInsterceptation();
                     break;
                 case 8:
                     System.out.println("Voltando...");
@@ -167,21 +188,65 @@ public class Main{
         }
     }
 
-    private static int circleMenu(){
-        System.out.println("""
-                Escolha uma operação:
-                1 - Criar circulos
-                2 - Remover circulo
-                3 - Listar circulos
-                4 - Calcular diametro
-                5 - Calcular circunferencia
-                6 - Calcular area
-                7 - Saber se um circulo intercepta outro
-                8 - Voltar ao menu principal
-                """);
-        int option = scanner.nextInt();
-        scanner.nextLine(); //limpa o buffer;
-        return option;
+    private static void createCircle(){
+        Circle circle = createInstaceOfCircle();
+        ArrayUtility.addIn(circle,circles);
+    }
+
+    private static void removeCircle(){
+        int position = Finder.findCircle(circles);
+        ArrayUtility.removeObject(position,circles);
+    }
+
+    private static void showCircles(){
+        for(Circle circle:circles){
+            if(circle != null){
+                System.out.println(circle);
+            }
+        }
+    }
+
+    private static void circleDiameter(){
+        int position = Finder.findCircle(circles);
+        double diameter = circles[position].getDiameter();
+        System.out.println("Diametro = "+diameter);
+    }
+
+    private static void circleCircumference(){
+        int position = Finder.findCircle(circles);
+        double circumference = circles[position].getCircumference();
+        System.out.println("Circumferencia = "+circumference);
+    }
+
+    private static void circleArea(){
+        int position = Finder.findCircle(circles);
+        double area = circles[position].getArea();
+        System.out.println("Area ="+area);
+    }
+
+    private static void circleInsterceptation(){
+        int position = Finder.findCircle(circles);
+        int position2 = Finder.findCircle(circles);
+        boolean itDoes = circles[position].sharePoints(circles[position2]);
+
+        if(itDoes){
+            System.out.println("Interceptam");
+            return;
+        }
+
+        System.out.println("Não interceptam");
+
+    }
+
+    private static Circle createInstaceOfCircle(){
+        System.out.println("Informe o nome do circulo: ");
+        String name = scanner.nextLine();
+        System.out.println("Informe o ponto central: ");
+        int position = Finder.findPoint(points);
+        Point centralPoint = points[position];
+        System.out.println("Informe o raio do circulo: ");
+        double radius = scanner.nextDouble();
+        return new Circle(name,centralPoint,radius);
     }
 
 }
