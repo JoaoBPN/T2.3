@@ -1,4 +1,4 @@
-public class Circle{
+public class Circle implements Findable{
 
     public static final double pI = 3.14159;
 
@@ -55,6 +55,32 @@ public class Circle{
     @Override
     public String toString(){
         return getName()+" = "+"["+ getCentralPoint().getX() +";"+getCentralPoint().getY()+"]" + " Raio = "+getRadius();
+    }
+
+    @Override
+    public boolean isSimilar(String parameter,String value){
+
+        if(parameter.equals("nome")){
+            if(getName().equals(value)){
+                return true;
+            }
+        }
+        if(parameter.equals("x")){
+            if(getCentralPoint().getX() == Double.parseDouble(value)){
+                return true;
+            }
+        }
+        if(parameter.equals("y")){
+            if(getCentralPoint().getY() == Double.parseDouble(value)){
+                return true;
+            }
+        }
+        if(parameter.equals("raio")){
+            if(getRadius() == Double.parseDouble(value)){
+                return true;
+            }
+        }
+        return false;
     }
 
 }

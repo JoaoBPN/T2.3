@@ -1,7 +1,7 @@
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 
-public class Point{
+public class Point implements Findable{
 
     private String name;
     private double x;
@@ -47,5 +47,25 @@ public class Point{
 
     }
 
+    @Override
+    public boolean isSimilar(String parameter,String value){
+
+        if(parameter.equals("nome")){
+            if(getName().equals(value)){
+                return true;
+            }
+        }
+        if(parameter.equals("x")){
+            if(getX() == Double.parseDouble(value)){
+                return true;
+            }
+        }
+        if(parameter.equals("y")){
+            if(getY() == Double.parseDouble(value)){
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

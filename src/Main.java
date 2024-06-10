@@ -118,7 +118,7 @@ public class Main{
     }
 
     private static void removePoint(){
-        int position = Finder.findPoint(points);
+        int position = Finder.find(points);
         ArrayUtility.removeObject(position,points);
     }
 
@@ -131,8 +131,8 @@ public class Main{
     }
 
     private static void distanceBetweenPoints(){
-        int position = Finder.findPoint(points);
-        int position2 = Finder.findPoint(points);
+        int position = Finder.find(points);
+        int position2 = Finder.find(points);
         double distance = points[position].calculateDistanceBeetweenPoints(points[position2]);
         System.out.println("Distancia = "+distance);
     }
@@ -194,7 +194,7 @@ public class Main{
     }
 
     private static void removeCircle(){
-        int position = Finder.findCircle(circles);
+        int position = Finder.find(circles);
         ArrayUtility.removeObject(position,circles);
     }
 
@@ -207,26 +207,26 @@ public class Main{
     }
 
     private static void circleDiameter(){
-        int position = Finder.findCircle(circles);
+        int position = Finder.find(circles);
         double diameter = circles[position].getDiameter();
         System.out.println("Diametro = "+diameter);
     }
 
     private static void circleCircumference(){
-        int position = Finder.findCircle(circles);
+        int position = Finder.find(circles);
         double circumference = circles[position].getCircumference();
         System.out.println("Circumferencia = "+circumference);
     }
 
     private static void circleArea(){
-        int position = Finder.findCircle(circles);
+        int position = Finder.find(circles);
         double area = circles[position].getArea();
         System.out.println("Area ="+area);
     }
 
     private static void circleInsterceptation(){
-        int position = Finder.findCircle(circles);
-        int position2 = Finder.findCircle(circles);
+        int position = Finder.find(circles);
+        int position2 = Finder.find(circles);
         boolean itDoes = circles[position].sharePoints(circles[position2]);
 
         if(itDoes){
@@ -242,7 +242,7 @@ public class Main{
         System.out.println("Informe o nome do circulo: ");
         String name = scanner.nextLine();
         System.out.println("Informe o ponto central: ");
-        int position = Finder.findPoint(points);
+        int position = Finder.find(points);
         Point centralPoint = points[position];
         System.out.println("Informe o raio do circulo: ");
         double radius = scanner.nextDouble();
