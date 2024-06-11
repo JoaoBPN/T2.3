@@ -1,4 +1,4 @@
 public interface Findable {
-    boolean isSimilar(String parameters,String values);
+    boolean sameParameter(String parameters, String values);
 }
 

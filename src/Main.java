@@ -114,7 +114,7 @@ public class Main{
 
     private static void createPoint(){
         Point point = createInstaceOfPoint();
-        ArrayUtility.addIn(point,points);
+        ArrayUtility.addObject(point,points);
     }
 
     private static void removePoint(){
@@ -146,7 +146,7 @@ public class Main{
         double x = scanner.nextDouble();
         System.out.println("Informe a coordenada y do ponto");
         double y = scanner.nextDouble();
-        return new Point(name,x,y);
+        return new Point(name.trim(),x,y);
     }
 
     private static void circleSwitch(){
@@ -190,7 +190,7 @@ public class Main{
 
     private static void createCircle(){
         Circle circle = createInstaceOfCircle();
-        ArrayUtility.addIn(circle,circles);
+        ArrayUtility.addObject(circle,circles);
     }
 
     private static void removeCircle(){
@@ -228,14 +228,11 @@ public class Main{
         int position = Finder.find(circles);
         int position2 = Finder.find(circles);
         boolean itDoes = circles[position].sharePoints(circles[position2]);
-
         if(itDoes){
             System.out.println("Interceptam");
             return;
         }
-
         System.out.println("Não interceptam");
-
     }
 
     private static Circle createInstaceOfCircle(){
@@ -246,7 +243,7 @@ public class Main{
         Point centralPoint = points[position];
         System.out.println("Informe o raio do circulo: ");
         double radius = scanner.nextDouble();
-        return new Circle(name,centralPoint,radius);
+        return new Circle(name.trim(),centralPoint,radius);
     }
 
 }

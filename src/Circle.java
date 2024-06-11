@@ -58,7 +58,7 @@ public class Circle implements Findable{
     }
 
     @Override
-    public boolean isSimilar(String parameter,String value){
+    public boolean sameParameter(String parameter, String value){
 
         if(parameter.equals("nome")){
             if(getName().equals(value)){

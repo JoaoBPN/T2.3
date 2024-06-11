@@ -2,15 +2,16 @@ import java.util.Arrays;
 
 public class ArrayUtility {
 
-    public static void addIn(Object it, Object[] them){
+    public static void addObject(Object object, Object[] objects){
 
-        if(thisArrayIsFull(them)){
+        if(thisArrayIsFull(objects)){
             System.out.println("O array esta cheio, não é possível adicionar");
+            return;
         }
 
-        for (int i = 0; i < them.length; i++) {
-            if(them[i]==null){
-                them[i] = it;
+        for (int i = 0; i < objects.length; i++) {
+            if(objects[i]==null){
+                objects[i] = object;
                 return;
             }
         }
@@ -18,15 +19,15 @@ public class ArrayUtility {
 
     public static void removeObject(int position,Object[] objects){
         objects[position] = null;
-        adjustArray(objects);
+        agroupObjects(objects);
     }
 
-    public static void adjustArray(Object[] objects){
+    public static void agroupObjects(Object[] objects){
         Object[] adjuster = new Object[objects.length];
 
         for(Object object:objects){
             if(object != null){
-                addIn(object,adjuster);
+                addObject(object,adjuster);
             }
         }
 
@@ -34,7 +35,7 @@ public class ArrayUtility {
 
         for(Object object: adjuster){
             if(object != null){
-                addIn(object,objects);
+                addObject(object,objects);
             }
         }
 
@@ -47,5 +48,15 @@ public class ArrayUtility {
             }
         }
         return true;
+    }
+
+    public static int nonNullObjects(Object[] array){
+        int cont = 0;
+        for(Object element:array){
+            if(element != null){
+                cont++;
+            }
+        }
+        return cont;
     }
 }

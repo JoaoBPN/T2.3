@@ -1,24 +1,17 @@
 import java.util.Scanner;
-
 public class Finder {
-
+    public static final int ammoutOfDiferentMethods = 4;
     static Scanner scanner = new Scanner(System.in);
 
     public static int find(Findable[] findables){
 
         String[] methods = getFinalString();
 
-        int methodsAmmount = 0;
+        int methodsAmmount = ArrayUtility.nonNullObjects(methods);
         int fulfilledMethods;
 
-        for(String method:methods){
-            if(method != null){
-                methodsAmmount++;
-            }
-        }
-
-        String[] parameters = new String[methods.length];
-        String[] values = new String[methods.length];
+        String[] parameters = new String[methods.length/2];
+        String[] values = new String[methods.length/2];
 
         for(int i = 0;i < methods.length;i++){
             if(methods[i] != null){
@@ -32,7 +25,7 @@ public class Finder {
             fulfilledMethods = 0;
             for (int j = 0; j < parameters.length; j++) {
                 if(parameters[j] != null) {
-                    if (findables[i].isSimilar(parameters[j], values[j])) {
+                    if (findables[i].sameParameter(parameters[j], values[j])) {
                         fulfilledMethods++;
                     }
                 }
@@ -41,16 +34,15 @@ public class Finder {
                 return i;
             }
         }
-
         return -1;
     }
 
-    public static String[] getFinalString(){
+    private static String[] getFinalString(){
         System.out.println("Informe os parametros");
         String parameters = scanner.nextLine();
         parameters = parameters.toLowerCase().replaceAll("="," ").replaceAll(" +"," ");
         String[] parts = parameters.split(" ");
-        String[] methods = new String[4];
+        String[] methods = new String[ammoutOfDiferentMethods];
         for(int i = 0;i < parts.length;i+=2){
             switch (parts[i]) {
                 case "nome" -> methods[0] = parts[i] + " " + parts[i + 1];
