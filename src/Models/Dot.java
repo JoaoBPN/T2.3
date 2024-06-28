@@ -1,13 +1,14 @@
-import static java.lang.Math.pow;
-import static java.lang.Math.sqrt;
+package Models;
 
-public class Point implements Findable{
+import static java.lang.Math.*;
+
+public class Dot implements Findable {
 
     private String name;
     private double x;
     private double y;
 
-    public Point(String name,double x,double y){
+    public Dot(String name, double x, double y){
         setName(name);
         setX(x);
         setY(y);
@@ -37,19 +38,34 @@ public class Point implements Findable{
         return y;
     }
 
-    public double calculateDistanceBeetweenPoints(Point point){
-        return sqrt(pow(getX()-point.getX(),2) + pow(getY()- point.getY(),2));
+    public double distanceBeetweenDots(Dot dot){
+        return sqrt(pow(getX()- dot.getX(),2) + pow(getY()- dot.getY(),2));
     }
 
     @Override
     public String toString(){
         return getName()+" = "+"["+getX()+";"+getY()+"]";
-
     }
 
     @Override
-    public boolean sameParameter(String parameter, String value){
+    public String[] ownMethods(String[] parts){
+        int maxParameterAmmout = 3;
+        String[] methods = new String[maxParameterAmmout];
+        for(int i = 0;i < parts.length;i+=2){
+            switch (parts[i]) {
+                case "nome" -> methods[0] = parts[i] + " " + parts[i + 1];
+                case "x" -> methods[1] = parts[i] + " " + parts[i + 1];
+                case "y" -> methods[2] = parts[i] + " " + parts[i + 1];
+                default -> {
+                    return null;
+                }
+            }
+        }
+        return methods;
+    }
 
+    @Override
+    public boolean hasSameParameter(String parameter, String value){
         if(parameter.equals("nome")){
             if(getName().equals(value)){
                 return true;

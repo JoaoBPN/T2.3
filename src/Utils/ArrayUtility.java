@@ -1,10 +1,11 @@
+package Utils;
+
 import java.util.Arrays;
 
 public class ArrayUtility {
 
     public static void addObject(Object object, Object[] objects){
-
-        if(thisArrayIsFull(objects)){
+        if(isThisArrayIsFull(objects)){
             System.out.println("O array esta cheio, não é possível adicionar");
             return;
         }
@@ -18,11 +19,15 @@ public class ArrayUtility {
     }
 
     public static void removeObject(int position,Object[] objects){
+        if(isAInvalidPosition(position, objects)){
+            System.out.println("Posição invalida,não foi possível remover");
+            return;
+        }
         objects[position] = null;
-        agroupObjects(objects);
+        sortObjects(objects);
     }
 
-    public static void agroupObjects(Object[] objects){
+    public static void sortObjects(Object[] objects){
         Object[] adjuster = new Object[objects.length];
 
         for(Object object:objects){
@@ -38,10 +43,9 @@ public class ArrayUtility {
                 addObject(object,objects);
             }
         }
-
     }
 
-    public static boolean thisArrayIsFull(Object[] array){
+    public static boolean isThisArrayIsFull(Object[] array){
         for(Object element:array){
             if(element == null) {
                 return false;
@@ -50,13 +54,29 @@ public class ArrayUtility {
         return true;
     }
 
-    public static int nonNullObjects(Object[] array){
-        int cont = 0;
+    public static int ammountOfNotNullObjects(Object[] array){
+        int count = 0;
         for(Object element:array){
             if(element != null){
-                cont++;
+                count++;
             }
         }
-        return cont;
+        return count;
     }
+
+    public static int getAny(Object[] array){
+        int count = 0;
+        for(Object element:array){
+            if(element != null){
+                return count;
+            }
+            count++;
+        }
+        return -1;
+    }
+
+    public static boolean isAInvalidPosition(int position, Object[] array){
+        return position < 0 || position >= array.length;
+    }
+
 }

@@ -1,14 +1,16 @@
-import java.util.Scanner;
+import Models.Circle;
+import Models.Dot;
+import Utils.ArrayUtility;
+import Utils.Finder;
+import Utils.SuperScanner;
+
 public class Main{
 
-    private static final Scanner scanner = new Scanner(System.in);
-
-    private static final int maxPointsSize = 10;
+    private static final int maxDotsSize = 10;
     private static final int maxCirclesSize = 2;
 
-    private static final Point[] points = new Point[maxPointsSize];
+    private static final Dot[] dots = new Dot[maxDotsSize];
     private static final Circle[] circles = new Circle[maxCirclesSize];
-
 
     public static void main(String[] args){
         mainSwitch();
@@ -22,7 +24,7 @@ public class Main{
 
             switch(option){
                 case 1:
-                    pointSwitch();
+                    dotSwitch();
                     break;
                 case 2:
                     circleSwitch();
@@ -33,7 +35,6 @@ public class Main{
                 default:
                     System.out.println("Operação invalida");
                     break;
-
             }
         }
     }
@@ -45,12 +46,10 @@ public class Main{
                 2 - Operações com circulos
                 3 - Encerrar o programa
                 """);
-        int option = scanner.nextInt();
-        scanner.nextLine(); // limpa o buffer;
-        return option;
+        return SuperScanner.getInteger();
     }
 
-    private static int pointMenu(){
+    private static int dotMenu(){
         System.out.println("""
                 Escolha uma operação:
                 1 - Criar ponto
@@ -59,10 +58,7 @@ public class Main{
                 4 - Calcular distancia entre pontos
                 5 - Voltar ao menu principal
                 """);
-
-        int option = scanner.nextInt();
-        scanner.nextLine(); //limpa o buffer;
-        return option;
+        return SuperScanner.getInteger();
     }
 
     private static int circleMenu(){
@@ -77,30 +73,27 @@ public class Main{
                 7 - Saber se um circulo intercepta outro
                 8 - Voltar ao menu principal
                 """);
-        int option = scanner.nextInt();
-        scanner.nextLine(); //limpa o buffer;
-        return option;
+        return SuperScanner.getInteger();
     }
 
-
-    private static void pointSwitch(){
+    private static void dotSwitch(){
         int option = -1;
 
         while(option != 5){
-            option = pointMenu();
+            option = dotMenu();
 
             switch(option){
                 case 1:
-                    createPoint();
+                    createDot();
                     break;
                 case 2:
-                    removePoint();
+                    removeDot();
                     break;
                 case 3:
-                    showPoints();
+                    showDots();
                     break;
                 case 4:
-                    distanceBetweenPoints();
+                    distanceBetweenDots();
                     break;
                 case 5:
                     System.out.println("Voltando...");
@@ -112,41 +105,43 @@ public class Main{
         }
     }
 
-    private static void createPoint(){
-        Point point = createInstaceOfPoint();
-        ArrayUtility.addObject(point,points);
+    private static void createDot(){
+        Dot dot = createInstanceOfDots();
+        ArrayUtility.addObject(dot, dots);
     }
 
-    private static void removePoint(){
-        int position = Finder.find(points);
-        ArrayUtility.removeObject(position,points);
+    private static void removeDot(){
+        int position = Finder.find(dots);
+        ArrayUtility.removeObject(position, dots);
     }
 
-    private static void showPoints(){
-        for(Point point:points){
-            if(point != null) {
-                System.out.println(point);
+    private static void showDots(){
+        for(Dot dot : dots){
+            if(dot != null) {
+                System.out.println(dot);
             }
         }
     }
 
-    private static void distanceBetweenPoints(){
-        int position = Finder.find(points);
-        int position2 = Finder.find(points);
-        double distance = points[position].calculateDistanceBeetweenPoints(points[position2]);
+    private static void distanceBetweenDots(){
+        int position = Finder.find(dots);
+        int position2 = Finder.find(dots);
+        if(ArrayUtility.isAInvalidPosition(position, dots) || ArrayUtility.isAInvalidPosition(position2, dots)){
+            System.out.println("Posição invalida encontrada,não foi possível calcular");
+            return;
+        }
+        double distance = dots[position].distanceBeetweenDots(dots[position2]);
         System.out.println("Distancia = "+distance);
     }
 
-
-
-    private static Point createInstaceOfPoint(){
+    private static Dot createInstanceOfDots(){
         System.out.println("Informe o nome do ponto: ");
-        String name = scanner.nextLine();
+        String name = SuperScanner.getString();
         System.out.println("Informe a coordenada x do ponto");
-        double x = scanner.nextDouble();
+        double x = SuperScanner.getDouble();
         System.out.println("Informe a coordenada y do ponto");
-        double y = scanner.nextDouble();
-        return new Point(name.trim(),x,y);
+        double y = SuperScanner.getDouble();
+        return new Dot(name.trim(),x,y);
     }
 
     private static void circleSwitch(){
@@ -176,7 +171,7 @@ public class Main{
                     circleArea();
                     break;
                 case 7:
-                    circleInsterceptation();
+                    circleInterceptation();
                     break;
                 case 8:
                     System.out.println("Voltando...");
@@ -189,7 +184,7 @@ public class Main{
     }
 
     private static void createCircle(){
-        Circle circle = createInstaceOfCircle();
+        Circle circle = createInstanceOfCircle();
         ArrayUtility.addObject(circle,circles);
     }
 
@@ -208,26 +203,41 @@ public class Main{
 
     private static void circleDiameter(){
         int position = Finder.find(circles);
+        if(ArrayUtility.isAInvalidPosition(position, circles)){
+            System.out.println("Posição invalida encontrada,não foi possível calcular");
+            return;
+        }
         double diameter = circles[position].getDiameter();
         System.out.println("Diametro = "+diameter);
     }
 
     private static void circleCircumference(){
         int position = Finder.find(circles);
+        if(ArrayUtility.isAInvalidPosition(position, circles)){
+            System.out.println("Posição invalida encontrada,não foi possível calcular");
+            return;
+        }
         double circumference = circles[position].getCircumference();
         System.out.println("Circumferencia = "+circumference);
     }
 
     private static void circleArea(){
         int position = Finder.find(circles);
+        if(ArrayUtility.isAInvalidPosition(position, circles)){
+            System.out.println("Posição invalida encontrada,não foi possível calcular");
+            return;
+        }
         double area = circles[position].getArea();
         System.out.println("Area ="+area);
     }
 
-    private static void circleInsterceptation(){
+    private static void circleInterceptation(){
         int position = Finder.find(circles);
         int position2 = Finder.find(circles);
-        boolean itDoes = circles[position].sharePoints(circles[position2]);
+        if(ArrayUtility.isAInvalidPosition(position, circles) || ArrayUtility.isAInvalidPosition(position2, circles)){
+            return;
+        }
+        boolean itDoes = circles[position].shareDots(circles[position2]);
         if(itDoes){
             System.out.println("Interceptam");
             return;
@@ -235,15 +245,15 @@ public class Main{
         System.out.println("Não interceptam");
     }
 
-    private static Circle createInstaceOfCircle(){
+    private static Circle createInstanceOfCircle(){
         System.out.println("Informe o nome do circulo: ");
-        String name = scanner.nextLine();
+        String name = SuperScanner.getString();
         System.out.println("Informe o ponto central: ");
-        int position = Finder.find(points);
-        Point centralPoint = points[position];
+        int position = Finder.find(dots);
+        Dot centralDot = dots[position];
         System.out.println("Informe o raio do circulo: ");
-        double radius = scanner.nextDouble();
-        return new Circle(name.trim(),centralPoint,radius);
+        double radius = SuperScanner.getDouble();
+        return new Circle(name.trim(), centralDot,radius);
     }
 
 }
