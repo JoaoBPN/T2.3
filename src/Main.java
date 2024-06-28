@@ -250,6 +250,10 @@ public class Main{
         String name = SuperScanner.getString();
         System.out.println("Informe o ponto central: ");
         int position = Finder.find(dots);
+        if(ArrayUtility.isAInvalidPosition(position,dots)){
+            System.out.println("Não foi possível encontar o ponto, encerrando a criação");
+            return null;
+        }
         Dot centralDot = dots[position];
         System.out.println("Informe o raio do circulo: ");
         double radius = SuperScanner.getDouble();

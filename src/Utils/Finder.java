@@ -82,7 +82,7 @@ public class Finder {
     private static String[] getFinalString(Findable[] findables){
         System.out.println("Informe os parametros");
         String parameters = SuperScanner.getString();
-        parameters = parameters.toLowerCase().replaceAll("="," ").replaceAll(" +"," ");
+        parameters = parameters.replaceAll("="," ").replaceAll(" +"," ");
         String[] parts = parameters.split(" ");
         if(parts.length % 2 != 0){
             return null;

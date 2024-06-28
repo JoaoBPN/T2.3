@@ -64,7 +64,7 @@ public class Circle implements Findable {
         int maxParameterAmmout = 4;
         String[] methods = new String[maxParameterAmmout];
         for(int i = 0;i < parts.length;i+=2){
-            switch (parts[i]) {
+            switch (parts[i].toLowerCase()) {
                 case "nome" -> methods[0] = parts[i] + " " + parts[i + 1];
                 case "x" -> methods[1] = parts[i] + " " + parts[i + 1];
                 case "y" -> methods[2] = parts[i] + " " + parts[i + 1];
